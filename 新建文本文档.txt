@@ -1,0 +1,15 @@
+// 简单接收
+    // props:['age','sex'],
+    // props:{
+    //   age:Number,
+    //   sex:String
+    // }
+    props:{
+      age:{
+        type:Number,
+        required:true
+      },
+      sex:{
+        type:String,
+        default:"男"
+      }
