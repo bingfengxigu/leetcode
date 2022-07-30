@@ -1,0 +1,57 @@
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        UnionB unionB = new UnionB();
+        for(int i=0;i<isConnected.length;i++){
+            unionB.add(i);
+        }
+        for(int i=0;i<isConnected.length;i++){
+            for(int j=0;j<isConnected.length;j++){
+                if(isConnected[i][j]==1){
+                    unionB.merge(i,j);
+                }
+            }
+        }
+        return unionB.size;
+    }
+}
+class UnionB{
+    HashMap<Integer,Integer> father;
+    int size;
+    public UnionB(){
+        father = new HashMap<Integer,Integer>();
+        size = 0;
+    }
+    //判断是否联通
+    public boolean isConnected(int x, int y){
+        return find(x)==find(y);
+    }
+    // 合并
+    public void merge(int x, int y){
+        int rootX = find(x);
+        int rootY = find(y);
+        if(rootX!=rootY){
+            father.put(rootX,rootY);
+            size--;
+        }
+    }
+    //添加新的节点
+    public void add(int i){
+        if(!father.containsKey(i)){
+            father.put(i,null);
+            size++;
+        }
+    }
+    //寻找祖先
+    public int find(int i){
+        int root = i;
+        while(father.get(root)!=null){
+            root = father.get(root);
+        }
+        while(root!=i){
+            int temp = father.get(i);
+            father.put(i,root);
+            i = temp;
+        }
+        return root;
+    }
+}
